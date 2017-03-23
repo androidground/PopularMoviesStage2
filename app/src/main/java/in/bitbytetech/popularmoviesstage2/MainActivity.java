@@ -1,5 +1,6 @@
 package in.bitbytetech.popularmoviesstage2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.bitbytetech.popularmoviesstage2.model.Movie;
+import in.bitbytetech.popularmoviesstage2.model.MoviesInfo;
+import in.bitbytetech.popularmoviesstage2.utility.ApiUtility;
+import in.bitbytetech.popularmoviesstage2.utility.MovieDBEndpointInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "#PopularMovies: ";
 
-    private static String tmdb_end_point;
+    private String tmdb_end_point;
 
     private RecyclerView mRecyclerView;
     private MovieAdapter movieAdapter;
@@ -30,10 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String apiKey;
     private String language;
+    private String posterEndPoint;
+    private String posterEndPointSize;
 
-    private Retrofit retrofit;
+    //private Retrofit retrofit;
 
-    private MovieApiService movieApiService;
+    private ApiUtility apiUtility;
+
+    private MovieDBEndpointInterface movieDBEndpointInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
         language = getResources().getString(R.string.moviedb_language);
 
+        posterEndPoint = getResources().getString(R.string.moviedb_poster_endpoint);
+
+        posterEndPointSize = getResources().getString(R.string.moviedb_poster_size);
+
         mErrorMessage = (TextView) findViewById(R.id.error_message);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -58,18 +71,22 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setAdapter(movieAdapter);
 
-        retrofit = new Retrofit.Builder()
+        /*retrofit = new Retrofit.Builder()
                 .baseUrl(tmdb_end_point)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        movieApiService = retrofit.create(MovieApiService.class);
+        movieDBEndpointInterface = retrofit.create(MovieDBEndpointInterface.class);*/
+
+        apiUtility = new ApiUtility(tmdb_end_point, apiKey, language, posterEndPoint, posterEndPointSize);
+
+        movieDBEndpointInterface = ApiUtility.getMovieDbEndpointInterface();
 
         fetchPopularMovies();
     }
 
     private void fetchPopularMovies() {
-        Call<MoviesInfo> popularMovies = movieApiService.getPopularMovies(apiKey, language);
+        Call<MoviesInfo> popularMovies = movieDBEndpointInterface.getPopularMovies(apiKey, language);
         popularMovies.enqueue(new Callback<MoviesInfo>() {
             @Override
             public void onResponse(Call<MoviesInfo> call, Response<MoviesInfo> response) {
@@ -87,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchTopRatedMovies() {
-        Call<MoviesInfo> popularMovies = movieApiService.getTopRatedMovies(apiKey, language);
+        Call<MoviesInfo> popularMovies = movieDBEndpointInterface.getTopRatedMovies(apiKey, language);
         popularMovies.enqueue(new Callback<MoviesInfo>() {
             @Override
             public void onResponse(Call<MoviesInfo> call, Response<MoviesInfo> response) {
@@ -102,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+    
+    private void fetchFavoritesMovies() {
+        Intent intent = new Intent(this, MovieDetailsActivity.class);
+        this.startActivity(intent);
     }
 
     private void updateMovieAdapter(List<Movie> movies) {
@@ -144,8 +166,14 @@ public class MainActivity extends AppCompatActivity {
                 fetchTopRatedMovies();
                 break;
             }
+            case R.id.action_fav_movies: {
+                fetchFavoritesMovies();
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

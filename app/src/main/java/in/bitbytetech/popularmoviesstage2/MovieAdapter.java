@@ -12,6 +12,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.bitbytetech.popularmoviesstage2.model.Movie;
+import in.bitbytetech.popularmoviesstage2.utility.ApiUtility;
+
 /**
  * Created by Home on 01/02/2017.
  */
@@ -55,8 +58,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHandler> {
     @Override
     public void onBindViewHolder(MovieViewHandler holder, int position) {
         Movie movie = movieList.get(position);
+        String imagePath = ApiUtility.MovieDbUtility.getCompletePhotoUrl(movie.posterPath);
         Picasso.with(mContext)
-                .load("http://image.tmdb.org/t/p/w185" + movie.posterPath)
+                //.load("http://image.tmdb.org/t/p/w185" + movie.posterPath)
+                .load(imagePath)
                 .into(holder.imageView);
     }
 

@@ -30,6 +30,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity
+            android:name=".MovieDetailsActivity"
+            android:label="@string/title_activity_movie_detail"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <provider
+            android:authorities="in.bitbytetech.popularmoviesstage2"
+            android:name="in.bitbytetech.popularmoviesstage2.data.FavoritesMovieProvider" />
     </application>
 
 </manifest>

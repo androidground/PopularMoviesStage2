@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import in.bitbytetech.popularmoviesstage2.model.Movie;
+
 public class MovieDetailActivity extends AppCompatActivity {
 
     public final String TAG = "#MovieDetails: ";

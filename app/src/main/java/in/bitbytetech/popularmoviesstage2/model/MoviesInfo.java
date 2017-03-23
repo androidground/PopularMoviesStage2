@@ -1,4 +1,4 @@
-package in.bitbytetech.popularmoviesstage2;
+package in.bitbytetech.popularmoviesstage2.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

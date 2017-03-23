@@ -1,4 +1,4 @@
-package in.bitbytetech.popularmoviesstage2;
+package in.bitbytetech.popularmoviesstage2.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.bitbytetech.popularmoviesstage2.MovieDetailActivity;
+import in.bitbytetech.popularmoviesstage2.R;
 import in.bitbytetech.popularmoviesstage2.model.Movie;
 import in.bitbytetech.popularmoviesstage2.utility.ApiUtility;
 

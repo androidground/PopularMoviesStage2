@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.bitbytetech.popularmoviesstage2.adapter.MovieAdapter;
 import in.bitbytetech.popularmoviesstage2.model.Movie;
 import in.bitbytetech.popularmoviesstage2.model.MoviesInfo;
 import in.bitbytetech.popularmoviesstage2.utility.ApiUtility;
@@ -20,8 +21,6 @@ import in.bitbytetech.popularmoviesstage2.utility.MovieDBEndpointInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private void fetchFavoritesMovies() {
         Intent intent = new Intent(this, MovieDetailsActivity.class);
         this.startActivity(intent);

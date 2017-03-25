@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
         movieDBEndpointInterface = retrofit.create(MovieDBEndpointInterface.class);*/
 
-        apiUtility = new ApiUtility(tmdb_end_point, apiKey, language, posterEndPoint, posterEndPointSize);
+        ApiUtility.setMovieDbApiValues(tmdb_end_point, apiKey, language, posterEndPoint, posterEndPointSize);
 
-        movieDBEndpointInterface = ApiUtility.getMovieDbEndpointInterface();
+        movieDBEndpointInterface = ApiUtility.MovieDbUtility.getMovieDbEndpointInterface();
 
         fetchPopularMovies();
     }

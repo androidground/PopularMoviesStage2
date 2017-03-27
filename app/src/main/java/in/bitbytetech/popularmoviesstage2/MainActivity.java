@@ -1,10 +1,12 @@
 package in.bitbytetech.popularmoviesstage2;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MovieDBEndpointInterface movieDBEndpointInterface;
 
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,20 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL);
+
+        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+
+        //mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        /*if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+        else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }*/
+
+
 
         movieAdapter = new MovieAdapter(this);
 
@@ -82,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
         movieDBEndpointInterface = ApiUtility.MovieDbUtility.getMovieDbEndpointInterface();
 
         fetchPopularMovies();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mStaggeredGridLayoutManager.setSpanCount(2);
+        } else {
+            mStaggeredGridLayoutManager.setSpanCount(4);
+        }
     }
 
     private void fetchPopularMovies() {

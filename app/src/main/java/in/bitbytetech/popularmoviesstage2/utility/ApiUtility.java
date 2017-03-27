@@ -22,12 +22,12 @@ public class ApiUtility {
     private static String moviePhotoSizeUrl;
 
 
-    public static void setMovieDbApiValues(String movieDbEndPoint, String movieApiKey, String movieLanguage, String moviePhotoBaseUrl, String moviePhotoSizeUrl) {
-        movieDbEndPoint = movieDbEndPoint;
-        movieApiKey = movieApiKey;
-        movieLanguage = movieLanguage;
-        moviePhotoBaseUrl = moviePhotoBaseUrl;
-        moviePhotoSizeUrl = moviePhotoSizeUrl;
+    public static void setMovieDbApiValues(String endPoint, String apiKey, String language, String photoBaseUrl, String photoSizeUrl) {
+        movieDbEndPoint = endPoint;
+        movieApiKey = apiKey;
+        movieLanguage = language;
+        moviePhotoBaseUrl = photoBaseUrl;
+        moviePhotoSizeUrl = photoSizeUrl;
     }
 
     public static class MovieDbUtility {
